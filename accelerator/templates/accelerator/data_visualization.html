@@ -37,115 +37,200 @@
 <!-- Include Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Line Chart: Soil Moisture Over Time
-    const soilMoistureCtx = document.getElementById('soilMoistureChart').getContext('2d');
-    new Chart(soilMoistureCtx, {
-        type: 'line',
-        data: {
-            labels: {{ agric_labels|safe }},
-            datasets: [{
-                label: 'Soil Moisture (%)',
-                data: {{ agric_soil_moisture|safe }},
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-            }]
-        },
-        options: {
-            scales: {
-                x: {
+    // Function to initialize a line chart
+    function initializeLineChart(canvasId, labels, data, label, xTitle, yTitle) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) {
+            console.error(`Canvas element with ID ${canvasId} not found.`);
+            return;
+        }
+
+        new Chart(ctx.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
                     title: {
                         display: true,
-                        text: 'Timestamp'
+                        text: label
                     }
                 },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Soil Moisture (%)'
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: xTitle
+                        },
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: yTitle
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 
-    // Bar Chart: Industry Distribution
-    const industryDistributionCtx = document.getElementById('industryDistributionChart').getContext('2d');
-    new Chart(industryDistributionCtx, {
-        type: 'bar',
-        data: {
-            labels: ['AgriTech', 'MedTech', 'FinTech', 'Other'],
-            datasets: [{
-                label: 'Number of Entries',
-                data: [
-                    {{ industry_counts.AgriTech }},
-                    {{ industry_counts.MedTech }},
-                    {{ industry_counts.FinTech }},
-                    {{ industry_counts.Other }},
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
+    // Function to initialize a bar chart
+    function initializeBarChart(canvasId, labels, data, label, yTitle) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) {
+            console.error(`Canvas element with ID ${canvasId} not found.`);
+            return;
+        }
+
+        new Chart(ctx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
                     title: {
                         display: true,
-                        text: 'Number of Entries'
+                        text: label
                     }
-                }
-            }
-        }
-    });
-
-    // Pie Chart: Heart Rate Distribution (MedTech)
-    const heartRateCtx = document.getElementById('heartRateChart').getContext('2d');
-    new Chart(heartRateCtx, {
-        type: 'pie',
-        data: {
-            labels: {{ medtech_heart_rate|safe }},
-            datasets: [{
-                label: 'Heart Rate (bpm)',
-                data: {{ medtech_heart_rate|safe }},
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
                 },
-                title: {
-                    display: true,
-                    text: 'Heart Rate Distribution (MedTech)'
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: yTitle
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
                 }
             }
+        });
+    }
+
+    // Function to initialize a pie chart
+    function initializePieChart(canvasId, labels, data, label, chartTitle) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) {
+            console.error(`Canvas element with ID ${canvasId} not found.`);
+            return;
         }
+
+        new Chart(ctx.getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: chartTitle
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize Charts
+    document.addEventListener('DOMContentLoaded', function () {
+        // Line Chart: Soil Moisture Over Time
+        initializeLineChart(
+            'soilMoistureChart',
+            {{ agric_labels|safe }},
+            {{ agric_soil_moisture|safe }},
+            'Soil Moisture (%)',
+            'Timestamp',
+            'Soil Moisture (%)'
+        );
+
+        // Bar Chart: Industry Distribution
+        initializeBarChart(
+            'industryDistributionChart',
+            ['AgriTech', 'MedTech', 'FinTech', 'Other'],
+            [
+                {{ industry_counts.AgriTech }},
+                {{ industry_counts.MedTech }},
+                {{ industry_counts.FinTech }},
+                {{ industry_counts.Other }},
+            ],
+            'Number of Entries',
+            'Number of Entries'
+        );
+
+        // Pie Chart: Heart Rate Distribution (MedTech)
+        initializePieChart(
+            'heartRateChart',
+            {{ medtech_heart_rate|safe }},
+            {{ medtech_heart_rate|safe }},
+            'Heart Rate (bpm)',
+            'Heart Rate Distribution (MedTech)'
+        );
     });
 </script>
 {% endblock %}

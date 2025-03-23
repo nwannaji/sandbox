@@ -27,7 +27,7 @@ class AgriTechSensorData(BaseSensorData):
     light_intensity = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return f"AgriTech Sensor {self.sensor_id} - Soil Moisture: {self.soil_moisture}%"
+        return f"AgriSensor: {self.sensor_id} - Soil Moisture: {self.soil_moisture}%"
 
 class MedTechSensorData(BaseSensorData):
     patient_id = models.IntegerField(null=True, blank=True)
@@ -37,7 +37,7 @@ class MedTechSensorData(BaseSensorData):
     oxygen_level = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"MedTech Patient {self.patient_id} - Heart Rate: {self.heart_rate} bpm"
+        return f"Patient: {self.patient_id} - Heart Rate: {self.heart_rate} bpm"
 
 class FinTechSensorData(BaseSensorData):
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
@@ -50,9 +50,9 @@ class FinTechSensorData(BaseSensorData):
     balance = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
-        return f"FinTech Transaction {self.transaction_id} - Amount: {self.transaction_amount} {self.currency}"
+        return f"FinTech: {self.transaction_id} - Amount: N{self.transaction_amount}"
 
 class OtherSensorData(BaseSensorData):
     def __str__(self):
-        return f"Other Industry Data - {self.sensor_type}"
+        return f"Others:  {self.sensor_type}"
 

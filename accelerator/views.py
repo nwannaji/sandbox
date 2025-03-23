@@ -1,6 +1,6 @@
 from itertools import chain
 from django.shortcuts import render, redirect
-from .models import AgriTechSensorData, BaseSensorData, FinTechSensorData, MedTechSensorData, OtherSensorData
+from .models import AgriTechSensorData, FinTechSensorData, MedTechSensorData, OtherSensorData
 from .forms import AgricTechSensorDataForm,MedTechSensorDataForm,FinTechSensorDataForm,OtherSensorDataForm
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -56,14 +56,14 @@ def view_sensor_data(request):
     # Apply filtering if a query is provided
     if query:
         combined_queryset = [
-            data for data in combined_queryset if (
-                query.lower() in getattr(data, 'industry_type', '').lower() or
-                query.lower() in getattr(data, 'sensor_type', '').lower() or
-                query.lower() in getattr(data, 'sensor_id', '').lower() or
-                query.lower() in getattr(data, 'patient_id', '').lower() or
-                query.lower() in getattr(data, 'transaction_id', '').lower()
-            )
-        ]
+    data for data in combined_queryset if (
+        query.lower() in str(getattr(data, 'industry_type', '')).lower() or
+        query.lower() in str(getattr(data, 'sensor_type', '')).lower() or
+        query.lower() in str(getattr(data, 'sensor_id', '')).lower() or
+        query.lower() in str(getattr(data, 'patient_id', '')).lower() or
+        query.lower() in str(getattr(data, 'transaction_id', '')).lower()
+    )
+]
     paginator =  Paginator(combined_queryset, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

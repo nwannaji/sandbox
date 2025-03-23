@@ -13,9 +13,13 @@
             <th><a href="?sort_by=timestamp">Timestamp</a></th>
             <th><a href="?sort_by=industry_type">Industry</a></th>
             <th><a href="?sort_by=sensor_type">Sensor Type</a></th>
-            <th><a href="?sort_by=temperature">Temperture</a></th>
+            <th><a href="?sort_by=temperature">Soil Temp</a></th>
             <th><a href="?sort_by=humidity">Humidity</a></th>
-            <th>Details</th>
+            <th><a href="?sort_by=heart_rate">Heart Rate</a></th>
+            <th><a href="?sort_by=blood_pressure">Blood Pressure</a></th>
+            <th><a href="?sort_by=body_temperature">Body Temp</a></th>
+            <th><a href="?sort_by=transaction_id">Transaction Id</a></th>
+            <th><a href="#">Details</a></th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +30,10 @@
             <td>{{ data.sensor_type }}</td>
             <td>{{ data.temperature }}</td>
             <td>{{ data.humidity }}</td>
+            <td>{{ data.heart_rate }}</td>
+            <td>{{ data.blood_pressure }}</td>
+            <td>{{ data.body_temperature}}</td>
+            <td>{{ data.transaction_id}}</td>
             <td>{{ data }}</td>
         </tr>
         {% endfor %}

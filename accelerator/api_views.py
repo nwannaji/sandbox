@@ -1,35 +1,39 @@
 from rest_framework import generics
 from .models import AgriTechSensorData, MedTechSensorData, FinTechSensorData, OtherSensorData
-from .serializers import SensorDataSerializer
+from .serializers import AgriTechSensorDataSerializer, MedTechSensorDataSerializer, FinTechSensorDataSerializer, OtherSensorDataSerializer
 
-class SensorDataListCreateView(generics.ListCreateAPIView):
+# AgriTech API Views
+class AgriTechSensorDataListCreateView(generics.ListCreateAPIView):
     queryset = AgriTechSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = AgriTechSensorDataSerializer
 
-class SensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
+class AgriTechSensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = AgriTechSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = AgriTechSensorDataSerializer
 
-class SensorDataListCreateView(generics.ListCreateAPIView):
+# MedTech API Views
+class MedTechSensorDataListCreateView(generics.ListCreateAPIView):
     queryset = MedTechSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = MedTechSensorDataSerializer
 
-class SensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
+class MedTechSensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MedTechSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = MedTechSensorDataSerializer
 
-class SensorDataListCreateView(generics.ListCreateAPIView):
+# FinTech API Views
+class FinTechSensorDataListCreateView(generics.ListCreateAPIView):
     queryset = FinTechSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = FinTechSensorDataSerializer
 
-class SensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
+class FinTechSensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FinTechSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = FinTechSensorDataSerializer
 
-class SensorDataListCreateView(generics.ListCreateAPIView):
+# Other Sensor API Views
+class OtherSensorDataListCreateView(generics.ListCreateAPIView):
     queryset = OtherSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = OtherSensorDataSerializer
 
-class SensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
+class OtherSensorDataDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = OtherSensorData.objects.all()
-    serializer_class = SensorDataSerializer
+    serializer_class = OtherSensorDataSerializer

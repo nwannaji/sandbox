@@ -68,3 +68,25 @@ def view_sensor_data(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'accelerator/view_sensor_data.html', {'page_obj': page_obj})
+
+def analytics_dashboard(request):
+    # Fetch data for charts
+    agric_data = AgriTechSensorData.objects.all()
+    medtech_data = MedTechSensorData.objects.all()
+    fintech_data = FinTechSensorData.objects.all()
+    other_data = OtherSensorData.objects.all()
+
+    # Prepare data for Chart.js
+    context = {
+        'agric_labels': [data.timestamp.strftime('%Y-%m-%d %H:%M:%S') for data in agric_data],
+        'agric_soil_moisture': [data.soil_moisture for data in agric_data],
+        'medtech_heart_rate': [data.heart_rate for data in medtech_data],
+        'fintech_transaction_amounts': [float(data.transaction_amount) for data in fintech_data],
+        'industry_counts': {
+            'AgriTech': agric_data.count(),
+            'MedTech': medtech_data.count(),
+            'FinTech': fintech_data.count(),
+            'Other': other_data.count(),
+        },
+    }
+    return render(request, 'accelerator/data_visualization.html', context)

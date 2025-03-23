@@ -1,0 +1,151 @@
+{% extends 'accelerator/base.html' %}
+{% block content %}
+<h1 class="text-center mb-4">Sensor Data Analytics Dashboard</h1>
+
+<div class="container">
+    <!-- Line Chart: Soil Moisture Over Time -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Soil Moisture Over Time (AgriTech)</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="soilMoistureChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Bar Chart: Industry Distribution -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Industry Distribution</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="industryDistributionChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pie Chart: Heart Rate Distribution (MedTech) -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Heart Rate Distribution (MedTech)</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="heartRateChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Line Chart: Soil Moisture Over Time
+    const soilMoistureCtx = document.getElementById('soilMoistureChart').getContext('2d');
+    new Chart(soilMoistureCtx, {
+        type: 'line',
+        data: {
+            labels: {{ agric_labels|safe }},
+            datasets: [{
+                label: 'Soil Moisture (%)',
+                data: {{ agric_soil_moisture|safe }},
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Timestamp'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Soil Moisture (%)'
+                    }
+                }
+            }
+        }
+    });
+
+    // Bar Chart: Industry Distribution
+    const industryDistributionCtx = document.getElementById('industryDistributionChart').getContext('2d');
+    new Chart(industryDistributionCtx, {
+        type: 'bar',
+        data: {
+            labels: ['AgriTech', 'MedTech', 'FinTech', 'Other'],
+            datasets: [{
+                label: 'Number of Entries',
+                data: [
+                    {{ industry_counts.AgriTech }},
+                    {{ industry_counts.MedTech }},
+                    {{ industry_counts.FinTech }},
+                    {{ industry_counts.Other }},
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Entries'
+                    }
+                }
+            }
+        }
+    });
+
+    // Pie Chart: Heart Rate Distribution (MedTech)
+    const heartRateCtx = document.getElementById('heartRateChart').getContext('2d');
+    new Chart(heartRateCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ medtech_heart_rate|safe }},
+            datasets: [{
+                label: 'Heart Rate (bpm)',
+                data: {{ medtech_heart_rate|safe }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Heart Rate Distribution (MedTech)'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

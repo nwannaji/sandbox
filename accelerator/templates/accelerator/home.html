@@ -2,9 +2,13 @@
 {% load static %}
 
 {% block content %}
-<h1>Welcome to NigComSat Accelerator Sandbox Environment </h1>
-<p>Use the navigation bar to add or view sensor data.</p>
-<div class="container-fluid">
- <img src="{% static 'images/settings_img.jpg' %}" alt="settings">
+<div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+    <h1 class="text-center">Welcome to NigComSat Accelerator Sandbox Environment</h1>
+    <p class="text-center">Use the navigation bar to add or view sensor data.</p>
+    <div class="text-center">
+        <img src="{% static 'images/accel_img.png' %}" alt="settings" class="img-fluid">
+        <img src="{% static 'images/settings_img.jpg' %}" alt="settings" class="img-fluid">
+        <img src="{% static 'images/settings_img.jpg' %}" alt="settings" class="img-fluid">
+    </div>
 </div>
 {% endblock %}
